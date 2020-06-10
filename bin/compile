@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -e
+
+BUILD_DIR=$1
+
+if [ ! -f "$BUILD_DIR/.nvmrc" ]; then
+    echo ".nvmrc not found"
+    exit 0;
+fi
+
+echo "-----> Installing jq"
+
+# Download jq
+apt-get install jq
+
+NVM_NODE_VER=$(cat "$BUILD_DIR"/.nvmrc);
+echo "{ \"engines\": { \"node\": \"$NVM_NODE_VER\" } }" > $BUILD_DIR/tmp.json
+$BUILD_DIR/jq -s '.[0] * .[1]' package.json tmp.json >package-patched.json
+
+rm $BUILD_DIR/tmp.json
+mv $BUILD_DIR/package-patched.json $BUILD_DIR/package.json
