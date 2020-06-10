@@ -9,8 +9,6 @@ if [ ! -f "$BUILD_DIR/.nvmrc" ]; then
     exit 0;
 fi
 
-echo "-----> Installing jq"
-
 curl "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" -s -L -o $BUILD_DIR/jq
 chmod +x $BUILD_DIR/jq
 
