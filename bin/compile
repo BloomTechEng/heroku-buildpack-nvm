@@ -16,8 +16,9 @@ chmod +x $BUILD_DIR/jq
 
 echo "-----> Updating package.json node engine"
 NVM_NODE_VER=$(cat "$BUILD_DIR"/.nvmrc);
+echo "-----> .nvmrc version: $NVM_NODE_VER"
 echo "{ \"engines\": { \"node\": \"$NVM_NODE_VER\" } }" > $BUILD_DIR/tmp.json
-$BUILD_DIR/jq -s '.[0] * .[1]' package.json tmp.json >package-patched.json
+$BUILD_DIR/jq -s '.[0] * .[1]' $BUILD_DIR/package.json $BUILD_DIR/tmp.json >$BUILD_DIR/package-patched.json
 
 mv $BUILD_DIR/package-patched.json $BUILD_DIR/package.json
 
