@@ -14,9 +14,8 @@ echo "-----> Installing jq"
 curl "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" -s -L -o $BUILD_DIR/jq
 chmod +x $BUILD_DIR/jq
 
-echo "-----> Updating package.json node engine"
 NVM_NODE_VER=$(cat "$BUILD_DIR"/.nvmrc);
-echo "-----> .nvmrc version: $NVM_NODE_VER"
+echo "-----> Patching package.json engines.node to $NVM_NODE_VER"
 echo "{ \"engines\": { \"node\": \"$NVM_NODE_VER\" } }" > $BUILD_DIR/tmp.json
 $BUILD_DIR/jq -s '.[0] * .[1]' $BUILD_DIR/package.json $BUILD_DIR/tmp.json >$BUILD_DIR/package-patched.json
 
